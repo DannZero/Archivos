@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/daniel/Documentos/Algoritmos y Estructuras de Datos/Archivos/src/main.cpp
+iostream
+-
+fstream
+-
+cstdio
+-
+
