@@ -1,13 +1,14 @@
 #include <iostream>
 #include <fstream>
 #include <cstdio>
+#include <string>
 using namespace std;
 
 int main()
 {
     int opcion;
-    char* nombre;
-    string linea, entrada;
+    char* nombre, entrada;
+    string linea;
     fstream archivo;
     do {
         cout << "1. Escribir archivo" << endl;
@@ -22,7 +23,7 @@ int main()
             cout << "Ingrese nombre del archivo para escribir: ";
             cin >> nombre;
             // Abrir el archivo en modo escritura, lectura y concatenar
-            archivo.open(nombre, ios::out | ios::in);
+            archivo.open(nombre, ios::out | ios::in | ios::app);
             if (archivo.is_open()) {
                 while (getline(archivo, linea)) {
                     cout << linea << endl;
@@ -30,7 +31,7 @@ int main()
                 do {
                     cin >> entrada;
                     archivo << entrada << endl;
-                } while (entrada != "");
+                } while (entrada != '\n');
             } else {
                 cout << "No se pudo abrir el archivo" << endl;
             }
@@ -58,17 +59,19 @@ int main()
                 do {
                     cin >> entrada;
                     archivo << entrada << endl;
-                } while (entrada != "");
+                } while (entrada != '\n');
                 archivo.close();
+            } else {
+                cout << "Error." << endl;
             }
             break;
         case 4:
             cout << "Ingrese la direccion del archivo que desea borrar:" << endl;
             cin >> entrada;
-            if (remove(entrada.c_str()) != 0)
-                cout << "Error al borrar el archivo" << endl;
+            if (remove(const entrada) != 0)
+                cout << "Error al borrar el archivo." << endl;
             else
-                cout << "Archivo eliminado correctamente" << endl;
+                cout << "Archivo eliminado correctamente." << endl;
             break;
         case 0:
             break;
