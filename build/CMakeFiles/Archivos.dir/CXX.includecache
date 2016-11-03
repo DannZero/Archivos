@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/daniel/Documentos/Algoritmos y Estructuras de Datos/Archivos/src/main.cpp
+/Users/Dann/Documents/Algoritmos y Estructuras de Datos/Archivos/src/main.cpp
 iostream
 -
 fstream

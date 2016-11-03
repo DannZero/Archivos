@@ -7,8 +7,8 @@ using namespace std;
 int main()
 {
     int opcion;
-    char* nombre, entrada;
-    string linea;
+    string nombre;
+    string linea, entrada;
     fstream archivo;
     do {
         cout << "1. Escribir archivo" << endl;
@@ -19,25 +19,33 @@ int main()
         cin >> opcion;
 
         switch (opcion) {
+        // Escribir
         case 1:
-            cout << "Ingrese nombre del archivo para escribir: ";
+            cout << "Ingrese nombre del archivo para escribir (\"-q\" para salir): ";
             cin >> nombre;
-            // Abrir el archivo en modo escritura, lectura y concatenar
-            archivo.open(nombre, ios::out | ios::in | ios::app);
+            archivo.open(nombre, ios::in);
             if (archivo.is_open()) {
                 while (getline(archivo, linea)) {
                     cout << linea << endl;
                 }
-                do {
-                    cin >> entrada;
-                    archivo << entrada << endl;
-                } while (entrada != '\n');
+				archivo.close();
             } else {
                 cout << "No se pudo abrir el archivo" << endl;
             }
-            archivo.close();
+            archivo.open(nombre, ios::out | ios::app);
+            if (archivo.is_open()) {
+                do {
+                    cin >> entrada;
+                    if (entrada == "-q")
+                        break;
+                    archivo << entrada << endl;
+                } while (true);
+                archivo.close();
+            } else {
+                cout << "No se pudo abrir el archivo" << endl;
+            }
             break;
-
+        // Leer
         case 2:
             cout << "Ingrese nombre del archivo para leer: ";
             cin >> nombre;
@@ -48,27 +56,32 @@ int main()
                 }
                 archivo.close();
             } else
-                cout << "No se pudo abrir el archivo";
+                cout << "No se pudo abrir el archivo" << endl;
 
             break;
+        // Crear
         case 3:
             cout << "Ingrese nombre del archivo a crear: ";
             cin >> nombre;
-            archivo.open(nombre, ios::in);
+            archivo.open(nombre, ios::out | ios::trunc);
             if (archivo.is_open()) {
+                cout << "Escribe en el nuevo archivo \"" << nombre << "\" (\"-q\" para salir):" << endl;
                 do {
                     cin >> entrada;
+                    if (entrada == "-q")
+                        break;
                     archivo << entrada << endl;
-                } while (entrada != '\n');
+                } while (true);
                 archivo.close();
             } else {
-                cout << "Error." << endl;
+                cout << "Error al crear archivo" << endl;
             }
             break;
+        // Borrar
         case 4:
-            cout << "Ingrese la direccion del archivo que desea borrar:" << endl;
-            cin >> entrada;
-            if (remove(const entrada) != 0)
+            cout << "Ingrese el nombre del archivo que desea borrar: ";
+            cin >> nombre;
+            if (remove(nombre.c_str()) == -1)
                 cout << "Error al borrar el archivo." << endl;
             else
                 cout << "Archivo eliminado correctamente." << endl;
